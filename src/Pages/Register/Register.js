@@ -34,63 +34,70 @@ export const Register = () => {
 
 
     const navigate = useNavigate();
-    const submit = (event) => {
+    const submit = async (event) => {
         event.preventDefault();
-        fetch(`${API.signup}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: {
-                email: email,
-                password: password,
-            },
-        }).then((response) => {
-            alert("회원가입 되었습니다.");
-            navigate('/signin');
-        }).catch((error) => {
-            console.log(error);
-        })
+        try {
+            const response = await fetch(`${API.signup}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                }),
+            });
+
+            if (response.ok) {
+                alert("회원가입 되었습니다.");
+                navigate('/signin');
+            } else {
+                throw new Error(response.statusText);
+            }
+        } catch (error) {
+            alert("회원가입에 실패했습니다.");
+            console.error(error);
+        }
     };
 
 
 
-return (
-    <div className='container'>
-        <form>
-            <div class="row mb-3">
-                <h4 className="header">회원가입</h4>
-                <hr />
-                <label for="inputEmail3" class="col-sm-4 col-form-label"><EmailIcon className="Icon" />이메일</label>
-                <div class="col-sm-8">
-                    <input
-                        type="email"
-                        class="form-control"
-                        email={email}
-                        data-testid="email-input"
-                        placeholder="이메일을 입력하세요."
-                        onChange={handleEmailChange}></input>
-                    {mailError && <p style={{ color: 'red' }}>{mailError}</p>}
+    return (
+        <div className='container'>
+            <form>
+                <div class="row mb-3">
+                    <h4 className="header">회원가입</h4>
+                    <hr />
+                    <label htmlfor="inputEmail3" class="col-sm-4 col-form-label"><EmailIcon className="Icon" />이메일</label>
+                    <div class="col-sm-8">
+                        <input
+                            type="email"
+                            class="form-control"
+                            email={email}
+                            data-testid="email-input"
+                            placeholder="이메일을 입력하세요."
+                            onChange={handleEmailChange}></input>
+                        {mailError && <p style={{ color: 'red' }}>{mailError}</p>}
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputPassword3" class="col-sm-4 col-form-label"><KeyIcon className="Icon" />패스워드</label>
-                <div class="col-sm-8">
-                    <input
-                        type="password"
-                        class="form-control"
-                        value={password}
-                        data-testid="password-input"
-                        placeholder="패스워드를 입력하세요."
-                        onChange={handlePasswordChange}>
-                    </input>
-                    {pwError && <p style={{ color: 'red' }}>{pwError}</p>}
+                <div class="row mb-3">
+                    <label htmlfor="inputPassword3" class="col-sm-4 col-form-label"><KeyIcon className="Icon" />패스워드</label>
+                    <div class="col-sm-8">
+                        <input
+                            type="password"
+                            class="form-control"
+                            value={password}
+                            data-testid="password-input"
+                            placeholder="패스워드를 입력하세요."
+                            onChange={handlePasswordChange}>
+                        </input>
+                        {pwError && <p style={{ color: 'red' }}>{pwError}</p>}
+                    </div>
                 </div>
-            </div>
-            <button
-                disabled={pwError || mailError || (email === "") || (password === "")}
-                type="submit" class="btn btn-primary"
-                data-testid="signin-button"
-                onClick={submit}>회원가입</button>
-        </form>
-    </div>
-)
+                <button
+                    disabled={pwError || mailError || (email === "") || (password === "")}
+                    type="submit" class="btn btn-primary"
+                    data-testid="signin-button"
+                    onClick={submit}>회원가입</button>
+            </form>
+        </div>
+    )
 }
