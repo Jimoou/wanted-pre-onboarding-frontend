@@ -48,7 +48,7 @@ export const Register = () => {
 
             if (response.ok) {
                 alert("회원가입 되었습니다.");
-                navigate('/signin');
+                navigate("/signin")
             } else {
                 throw new Error(response.statusText);
             }
@@ -61,16 +61,16 @@ export const Register = () => {
 
 
     return (
-        <div className='container'>
+        <div className='formContainer'>
             <form>
-                <div class="row mb-3">
+                <div className="row mb-3">
                     <h4 className="header">회원가입</h4>
                     <hr />
-                    <label htmlfor="inputEmail3" class="col-sm-4 col-form-label"><EmailIcon className="Icon" />이메일</label>
-                    <div class="col-sm-8">
+                    <label htmlFor="inputEmail3" className="col-sm-4 col-form-label"><EmailIcon className="Icon" />이메일</label>
+                    <div className="col-sm-8">
                         <input
                             type="email"
-                            class="form-control"
+                            className="form-control"
                             email={email}
                             data-testid="email-input"
                             placeholder="이메일을 입력하세요."
@@ -78,12 +78,12 @@ export const Register = () => {
                         {mailError && <p style={{ color: 'red' }}>{mailError}</p>}
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label htmlfor="inputPassword3" class="col-sm-4 col-form-label"><KeyIcon className="Icon" />패스워드</label>
-                    <div class="col-sm-8">
+                <div className="row mb-3">
+                    <label htmlFor="inputPassword3" className="col-sm-4 col-form-label"><KeyIcon className="Icon" />패스워드</label>
+                    <div className="col-sm-8">
                         <input
                             type="password"
-                            class="form-control"
+                            className="form-control"
                             value={password}
                             data-testid="password-input"
                             placeholder="패스워드를 입력하세요."
@@ -94,9 +94,10 @@ export const Register = () => {
                 </div>
                 <button
                     disabled={pwError || mailError || (email === "") || (password === "")}
-                    type="submit" class="btn btn-primary"
+                    className="btn btn-primary"
                     data-testid="signin-button"
-                    onClick={submit}>회원가입</button>
+                    onClick={submit}
+                    >회원가입</button>
             </form>
         </div>
     )
