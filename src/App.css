@@ -5,13 +5,14 @@
   margin-top: 20px;
 }
 .container {
+  display: flex;
+  flex-direction: column;
   text-align: left;
   padding-left: 50px;
   padding-right: 50px;
   padding-bottom: 50px;
   padding-top: 30px;
   width: 500px;
-  height: 280px;
   margin: auto;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
