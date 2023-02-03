@@ -45,7 +45,7 @@ export const Login = () => {
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
-            
+
             const data = await response.json();
             localStorage.setItem("JWT", data.access_token);
             alert("로그인되었습니다.");
@@ -62,7 +62,7 @@ export const Login = () => {
                 <div class="row mb-3">
                     <h4 className="header">로그인</h4>
                     <hr />
-                    <label for="inputEmail3" class="col-sm-4 col-form-label"><EmailIcon className="Icon" />이메일</label>
+                    <label htmlfor="inputEmail3" class="col-sm-4 col-form-label"><EmailIcon className="Icon" />이메일</label>
                     <div class="col-sm-8">
                         <input
                             type="email"
@@ -75,7 +75,7 @@ export const Login = () => {
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="inputPassword3" class="col-sm-4 col-form-label"><KeyIcon className="Icon" />패스워드</label>
+                    <label htmlfor="inputPassword3" class="col-sm-4 col-form-label"><KeyIcon className="Icon" />패스워드</label>
                     <div class="col-sm-8">
                         <input
                             type="password"
