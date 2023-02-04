@@ -46,12 +46,13 @@ export const Register = () => {
                 }),
             });
 
-            if (response.ok) {
-                alert("회원가입 되었습니다.");
-                navigate("/signin")
-            } else {
-                throw new Error(response.statusText);
+            if (!response.ok) {
+                throw new Error("회원가입 실패");
             }
+
+            alert("회원가입 되었습니다.");
+            navigate("/signin")
+
         } catch (error) {
             alert("회원가입에 실패했습니다.");
             console.error(error);
@@ -97,7 +98,7 @@ export const Register = () => {
                     className="btn btn-primary"
                     data-testid="signin-button"
                     onClick={submit}
-                    >회원가입</button>
+                >회원가입</button>
             </form>
         </div>
     )
