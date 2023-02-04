@@ -40,6 +40,10 @@ export const TodoList = () => {
 
     //CREATE TODO
     const createTodo = async (event) => {
+        if (todo === "") {
+            return alert("내용을 입력하세요.");
+        }
+
         event.preventDefault();
         try {
             const response = await fetch(`${API.createTodo}`, {
@@ -52,15 +56,12 @@ export const TodoList = () => {
                     todo: todo
                 })
             });
-            if (!response.ok) {
-                throw new Error("오류오류");
-            }
+
             alert("추가되었습니다.");
             setSubmitting(submitting ? false : true);
 
         } catch (error) {
             alert("실패했습니다.")
-            setHttpError(error.message);
         }
     };
 
@@ -76,21 +77,28 @@ export const TodoList = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={createTodo}>
-                <input data-testid="new-todo-input" onChange={(e) => setTodo(e.target.value)} />
-                <button data-testid="new-todo-add-button" type="submit">추가</button>
-            </form>
-            <ul>
-                {data.map((item) => (
-                    <li key={item.id}>
-                        <label>
-                            {item.isCompleted ? <input type="checkbox" checked /> : <input type="checkbox" />}
-                            <span>{item.todo}</span>
-                        </label>
-                    </li>
-                ))}
-            </ul>
+        <div className="todoList">
+            <h2>TODO</h2>
+
+            <div className="input-group">
+                <input className="form-control" placeholder="내용을 입력하세요." data-testid="new-todo-input" onChange={(e) => setTodo(e.target.value)} />
+                <button className="btn btn-outline-secondary" data-testid="new-todo-add-button" type="submit" onClick={createTodo}>추가</button>
+            </div>
+            <div>
+                <hr />
+                <ul className="list-group list-group-flush" >
+                    {data.map((item) => (
+                        <li className="list-group-item" key={item.id}>
+                            <label htmlFor={`${item.id}`} className="form-check" >
+                                {item.isCompleted ? <input id={`${item.id}`} className="form-check-input" type="checkbox" checked /> : <input id={`${item.id}`} className="form-check-input" type="checkbox" />}
+                                <div className="form-check-label">
+                                    {item.todo}
+                                </div>
+                            </label>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }

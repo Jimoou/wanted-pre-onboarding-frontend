@@ -22,3 +22,18 @@
 .Icon {
   margin-right: 8px;
 }
+
+.todoList{
+  width: 500px;
+  margin: auto;
+  margin-bottom: 15px;
+  padding: 20px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.input-group{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.list-group-item:hover{
+  background-color: gainsboro;
+}
