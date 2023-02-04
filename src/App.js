@@ -14,6 +14,7 @@ function App() {
       <Navbar />
       <div className='main'>
         <Routes>
+          <Route path="/" element={<Navigate replace to="/todo"/>}/>
           {accessToken ?
           <>
           <Route path="/signin" element={<Navigate replace to="/todo" />} />
