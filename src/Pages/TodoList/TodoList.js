@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import API from '../../Config';
 import { SpinnerLoading } from "../../Util/SpinnerLoading";
-import {Todo} from "./Todo";
+import { Todo } from "./Todo";
 
 export const TodoList = () => {
     const accessToken = localStorage.getItem("JWT");
@@ -11,35 +11,35 @@ export const TodoList = () => {
     const [isLoading, setLoading] = useState(true);
     const [httpError, setHttpError] = useState(null);
 
-
     //GET
     useEffect(() => {
-        const fetchTODOs = async () => {
-            try {
-                const response = await fetch(`${API.getTodos}`, {
-                    method: 'GET',
-                    headers: { 'Authorization': `Bearer ${accessToken}` }
-                });
-                if (!response.ok) { throw new Error("API 호출 실패"); }
-
-                const responseJson = await response.json();
-
-                setData(responseJson.map(todoData => ({
-                    id: todoData.id,
-                    todo: todoData.todo,
-                    isCompleted: todoData.isCompleted,
-                    userId: todoData.userId
-                })));
-
-                setLoading(false);
-
-            } catch (error) {
-                setLoading(false);
-                setHttpError(error.message);
-            }
-        };
-        fetchTODOs();
+        fetchTodo();
     }, [submitting]);
+
+    const fetchTodo = async () => {
+        try {
+            const response = await fetch(`${API.getTodos}`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${accessToken}` }
+            });
+            if (!response.ok) { throw new Error("API 호출 실패"); }
+
+            const responseJson = await response.json();
+
+            setData(responseJson.map(todoData => ({
+                id: todoData.id,
+                todo: todoData.todo,
+                isCompleted: todoData.isCompleted,
+                userId: todoData.userId
+            })));
+
+            setLoading(false);
+
+        } catch (error) {
+            setLoading(false);
+            setHttpError(error.message);
+        }
+    };
 
     //CREATE TODO
     const createTodo = async (event) => {
@@ -121,7 +121,7 @@ export const TodoList = () => {
                                     onChange={(event) => {
                                         handleIsComplete(event, item.id, item.todo);
                                     }} />
-                                <Todo todo={item}/>
+                                <Todo todo={item} fetchTodo={fetchTodo}/>
                             </div>
                         </li>
                     ))}

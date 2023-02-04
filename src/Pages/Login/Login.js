@@ -1,7 +1,6 @@
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import API from '../../Config';
 
@@ -29,7 +28,6 @@ export const Login = () => {
         }
     }
 
-    const navigate = useNavigate();
     const submit = async (event) => {
         event.preventDefault();
         try {
@@ -47,8 +45,7 @@ export const Login = () => {
 
             const data = await response.json();
             localStorage.setItem("JWT", data.access_token);
-
-            navigate('/todo', { replace: true });
+            window.location.replace("/todo")
             alert("로그인되었습니다.");
 
         } catch (error) {
