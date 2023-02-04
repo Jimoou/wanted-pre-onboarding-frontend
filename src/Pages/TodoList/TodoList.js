@@ -61,6 +61,7 @@ export const TodoList = () => {
             });
 
             alert("추가되었습니다.");
+            setTodo("")
             setSubmitting(submitting ? false : true);
 
         } catch (error) {
@@ -81,7 +82,9 @@ export const TodoList = () => {
                     isCompleted: event.target.checked
                 })
             });
+ 
             setSubmitting(submitting ? false : true);
+            
         } catch (error) {
             console.log(error);
             alert("실패했습니다.")
@@ -104,7 +107,7 @@ export const TodoList = () => {
             <h2>TODO</h2>
 
             <div className="input-group">
-                <input className="form-control" placeholder="내용을 입력하세요." data-testid="new-todo-input" onChange={(event) => setTodo(event.target.value)} />
+                <input className="form-control" placeholder="내용을 입력하세요." data-testid="new-todo-input" value={todo} onChange={(event) => setTodo(event.target.value)} />
                 <button className="btn btn-outline-secondary" data-testid="new-todo-add-button" type="submit" onClick={createTodo}>추가</button>
             </div>
             <div>
