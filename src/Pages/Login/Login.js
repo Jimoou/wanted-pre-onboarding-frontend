@@ -30,24 +30,31 @@ export const Login = () => {
     }
 
     const navigate = useNavigate();
-    const submit = (event) => {
+    const submit = async (event) => {
         event.preventDefault();
-        fetch(`${API.signin}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
-        }).then((response) => {
-            const data = response.json();
+        try {
+            const response = await fetch(`${API.signin}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("로그인 실패");
+            }
+
+            const data = await response.json();
             localStorage.setItem("JWT", data.access_token);
+
             navigate('/todo', { replace: true });
             alert("로그인되었습니다.");
-        }).catch((error) => {
+
+        } catch (error) {
             alert("로그인에 실패했습니다.");
-            console.log(error.message);
-        });
+            console.error(error.message);
+        }
     };
 
     return (
